@@ -13,11 +13,6 @@ public class ContaPoupanca extends Conta{
         super(TipoConta.CONTA_POUPANCA);
     };
 
-    @Override
-    public TipoConta getTipoConta(){
-        return tipoConta;
-    }
-
     public ContaPoupanca(Cliente cliente){
         super(cliente, TipoConta.CONTA_POUPANCA);
     }
@@ -25,6 +20,12 @@ public class ContaPoupanca extends Conta{
     public ContaPoupanca(int numero, String agencia, BigDecimal valor, Cliente cliente){
 
         super(numero, agencia, valor, cliente, TipoConta.CONTA_POUPANCA);
-
     }
+
+    @Override
+    public TipoConta getTipoConta(){
+        return tipoConta;
+    }
+
+
 }

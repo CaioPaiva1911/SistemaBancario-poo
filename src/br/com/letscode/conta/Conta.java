@@ -14,8 +14,6 @@ public class Conta {
     private TipoConta tipoConta;
     Cliente cliente;
 
-    //public Conta(){ }
-
     public Conta(Cliente cliente, TipoConta tipoConta){
         this.cliente = cliente;
         this.tipoConta = tipoConta;
@@ -34,17 +32,22 @@ public class Conta {
         this.cliente = cliente;
     }
 
-
     public void sacar(BigDecimal valor) throws SaldoInsulficienteException {
 
         if(valor.compareTo(getSaldo()) == 1 ){
             throw new SaldoInsulficienteException(getSaldo(), valor);
         } else{
             saldo = saldo.subtract(valor).setScale(2, RoundingMode.HALF_EVEN);
+            System.out.println("Saque de: " + valor + " efetuado com sucesso!");
         }
 
     }
-    public void depositar(BigDecimal valor){ saldo = saldo.add(valor).setScale(2, RoundingMode.HALF_EVEN); }
+    public void depositar(BigDecimal valor){
+        saldo = saldo.add(valor).setScale(2, RoundingMode.HALF_EVEN);
+        System.out.println("Deposito de: " + valor + " efetuado com sucesso!");
+    }
+
+    public void investir(BigDecimal valor){ saldo = saldo.add(valor).setScale(2, RoundingMode.HALF_EVEN); }
 
 
     public void transferencia(Conta recebedor, BigDecimal valor) throws SaldoInsulficienteException {
@@ -54,11 +57,10 @@ public class Conta {
 
     public void consultarSaldo() {
         System.out.println("O cliente: " + getCliente().getNome()
-                + " tipo: " + getTipoConta()
-                + "está com saldo de: " + getSaldo()
+                + " tipo: " + getTipoConta().getDescricao()
+                + " está com saldo de: " + getSaldo()
         );
     }
-
 
     public int getNumero() {
         return numero;

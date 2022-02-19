@@ -35,8 +35,10 @@ public class ContaCorrente extends Conta{
         } else{
                 if (getCliente() instanceof PessoaJuridica) {
                     setSaldo(getSaldo().subtract(aplicarTaxa(valor)));
+                    System.out.println("Saque de: " + aplicarTaxa(valor) + " com taxa de 0.5% efetuado com sucesso!");
                 } else if (getCliente() instanceof PessoaFisica) {
                     setSaldo(getSaldo().subtract(valor));
+                    System.out.println("Saque de: " + valor + " efetuado com sucesso!");
                 }
         }
     }

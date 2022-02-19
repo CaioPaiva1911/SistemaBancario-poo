@@ -17,63 +17,61 @@ public class Aplicacao {
         Cliente pj = new PessoaJuridica("Loja de Sapatos MEI", "Rua das Oliveiras", "1234");
         Cliente inv = new PessoaJuridica("Padaria MEI", "Rua das Bananeiras", "123456");
 
-        Conta conta = new ContaPoupanca(pf);
-        Conta conta2 = new ContaCorrente(pj);
+        Conta pfCp = new ContaPoupanca(pf);
+        Conta pjCc = new ContaCorrente(pj);
         Conta invest = new ContaInvestimento(pj);
         Conta padinv = new ContaCorrente(inv);
+        //Tentando criar uma PJ poupança
+        Conta pjPoup = new ContaPoupanca(pj);
 
         bc.abrirConta(padinv);
-        bc.abrirConta(conta);
-        bc.abrirConta(conta2);
+        bc.abrirConta(pfCp);
+        bc.abrirConta(pjCc);
         bc.abrirConta(invest);
-
+        bc.abrirConta(pjPoup);
         System.out.println("Lista clientes!");
         bc.listarContas();
 
-        System.out.println("Buscar conta por dados!");
-        Conta teste = bc.buscarConta(3, "1", TipoConta.CONTA_INVESTIMENTO);
+        System.out.println("Buscar conta por conta!");
+        Conta teste = bc.buscarConta(4, "1", TipoConta.CONTA_INVESTIMENTO);
 
         System.out.println("Saldo inicial");
-        conta.depositar(BigDecimal.valueOf(1000));
-        conta2.depositar(BigDecimal.valueOf(1000));
-        invest.depositar(BigDecimal.valueOf(1000));
+        pfCp.depositar(BigDecimal.valueOf(1000));
+        pjCc.depositar(BigDecimal.valueOf(1000));
+        invest.investir(BigDecimal.valueOf(1000));
         padinv.depositar(BigDecimal.valueOf(1000));
 
-        conta.consultarSaldo();
-        conta2.consultarSaldo();
+        pfCp.consultarSaldo();
+        pjCc.consultarSaldo();
         invest.consultarSaldo();
-
-        System.out.println("Teste do método de busca de contas");
-        bc.buscarConta(1, "1", TipoConta.CONTA_POUPANCA);
+        padinv.consultarSaldo();
 
         System.out.println("Deposito");
-        conta.depositar(BigDecimal.valueOf(1000.00));
-
+        pfCp.depositar(BigDecimal.valueOf(1000.00));
 
         System.out.println("Saque");
-        conta.sacar(BigDecimal.valueOf(500.00));
-
-
+        pfCp.sacar(BigDecimal.valueOf(500.00));
 
         System.out.println("Saque pessoa Juridica");
-        conta2.sacar(BigDecimal.valueOf(100.00));
-
+        pjCc.sacar(BigDecimal.valueOf(100.00));
         padinv.sacar(BigDecimal.valueOf(100.00));
 
 
         System.out.println("Transferência");
-        conta.transferencia(conta2, BigDecimal.valueOf(20));
-        conta2.consultarSaldo();
-        conta.consultarSaldo();
+        pfCp.transferencia(pjCc, BigDecimal.valueOf(20));
+        pjCc.consultarSaldo();
+        pfCp.consultarSaldo();
 
         System.out.println("Transferência Pessoa Jurídica");
-        conta2.transferencia(conta, BigDecimal.valueOf(100));
-        conta2.consultarSaldo();
-        conta.consultarSaldo();
+        pjCc.transferencia(pfCp, BigDecimal.valueOf(100));
+        pjCc.consultarSaldo();
+        pfCp.consultarSaldo();
 
-        //Mudar o método de depositar para investir
         System.out.println("Investimentos");
-        invest.depositar(BigDecimal.valueOf(100));
+        invest.investir(BigDecimal.valueOf(100));
         invest.consultarSaldo();
+
+        System.out.println("Tentativa de saque acima de saldo");
+        pjCc.sacar(BigDecimal.valueOf(10_000));
     }
 }

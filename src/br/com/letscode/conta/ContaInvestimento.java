@@ -5,6 +5,7 @@ import br.com.letscode.clientes.PessoaFisica;
 import br.com.letscode.clientes.PessoaJuridica;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 public class ContaInvestimento extends Conta{
 
@@ -32,17 +33,23 @@ public class ContaInvestimento extends Conta{
     }
 
     @Override
-    public void depositar(BigDecimal valor) {
+    public void depositar(BigDecimal valor){
+        investir(valor);
+    }
+
+    @Override
+    public void investir(BigDecimal valor) {
 
         if (getCliente() instanceof PessoaJuridica) {
 
             BigDecimal valorTotal = valor.add(getSaldo());
             //setSaldo( getSaldo().add( rendimentoPJ(valor) ) );
-            setSaldo( rendimentoPJ(valorTotal) );
-
+            setSaldo( rendimentoPJ(valorTotal).setScale(2, RoundingMode.HALF_EVEN) );
+            System.out.println("Investimento de: " + valor + " efetuado com sucesso!");
         } else if (getCliente() instanceof PessoaFisica) {
 
-            setSaldo( getSaldo().add( valor ));
+            setSaldo(getSaldo().add(valor).setScale(2, RoundingMode.HALF_EVEN));
+            System.out.println("Investimento de: " + valor + " efetuado com sucesso!");
         }
 
     }
